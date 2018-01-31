@@ -1,0 +1,9 @@
+<div class="row games-filter default-gutter">
+  <input class="form-control" type="text" [value]="filterText" [placeholder]="filterPlaceholder" [formControl]="filterInput" />
+</div>
+<div class="row games-list default-gutter">
+  <div class="col-sm-3 games-item" *ngFor="let item of games">
+    <img [src]="item.game.box.medium" alt="{{item.game.name}}"><br>
+    <span>{{item.game.name}}</span>
+  </div>    
+</div>
