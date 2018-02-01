@@ -17,7 +17,7 @@ export class GamesComponent implements OnInit {
   enableFilter: boolean;
   filterText: string;
   filterPlaceholder: string;
-  filterInput = new FormControl();
+  filterInput: string;
   games: Array<any>;
   params = { limit: 10, offset: 0};
 
@@ -30,15 +30,15 @@ export class GamesComponent implements OnInit {
 
   getGames(): void {
     this.gamesService.getCustomers()
-        .subscribe(games => this.setGamesList(games));    
+        .subscribe(games => this.setGamesList(games));
   }
 
-  setGamesList(games) {    
+  setGamesList(games) {
     this.games = games.top;
     console.log(this.games)
 
     this.enableFilter = true;
-    
+
     this.filterPlaceholder = "Buscar";
   }
 
