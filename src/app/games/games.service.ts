@@ -18,10 +18,16 @@ export class GamesService {
 
   constructor(private http: Http) { }
 
-  getCustomers(): Observable<any> {
+  getGames(): Observable<any> {
     return this.http.get( this.apiUrl, { headers: this.headers, params: this.params })
       .map(this.extractJson)
       .catch((error: Response | any) => this.handleError(error));
+  }
+
+  getGame(id: number | string): Observable<any> {
+    return this.getGames()
+      // (+) before `id` turns the string into a number
+      .map(games => games.top.find(item => item.game._id === +id));
   }
 
   private extractJson(res: Response) {

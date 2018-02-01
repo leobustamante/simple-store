@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { GameModel } from '../providers/game.model';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -10,8 +11,7 @@ import { GamesService } from '../games.service';
   styleUrls: ['./game-detail.component.scss']
 })
 export class GameDetailComponent implements OnInit {
-	@Input() game: any;
-
+  game: Array<any>;
   constructor(
     private route: ActivatedRoute,
     private gamesService: GamesService,
@@ -19,15 +19,21 @@ export class GameDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  	console.log('olaS')
-    //this.getGame();
+    this.getGame();
   }
 
-  /*getGame(): void {
+  getGame(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.gamesService.getGame(id)
-      .subscribe(game => this.game = game);
-  }*/
+      .subscribe(game => this.setGameDetails(game));
+  }
+
+  setGameDetails(game) {
+    this.game = game;
+    //this.gameDeta
+
+    console.log(game)
+  }
 
   goBack(): void {
     this.location.back();

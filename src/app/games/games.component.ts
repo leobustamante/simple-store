@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
 
+import { GameDataModel, TopGamesModel } from '../providers/game.model';
 import { GamesService } from './games.service';
 
 import { NameFilterPipe } from '../pipes/name-filter.pipe';
@@ -21,7 +22,10 @@ export class GamesComponent implements OnInit {
   games: Array<any>;
   params = { limit: 10, offset: 0};
 
-  constructor(private gamesService: GamesService) { }
+  constructor(private gamesService: GamesService) { 
+    this.enableFilter = true;
+    this.filterPlaceholder = "Buscar";
+  }
 
   ngOnInit() {
     this.getGames();
@@ -29,17 +33,16 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(): void {
-    this.gamesService.getCustomers()
+    this.gamesService.getGames()
         .subscribe(games => this.setGamesList(games));
   }
 
+  getGame(): void {
+
+  }
+
   setGamesList(games) {
-    this.games = games.top;
-    console.log(this.games)
-
-    this.enableFilter = true;
-
-    this.filterPlaceholder = "Buscar";
+    this.games = games.top;   
   }
 
 }
