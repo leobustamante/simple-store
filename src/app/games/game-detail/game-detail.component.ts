@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { GameModel } from '../providers/game.model';
+import { GameModel } from '../../providers/game.model';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class GameDetailComponent implements OnInit {
   }
 
   getGame(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = + this.route.snapshot.paramMap.get('id');
     this.gamesService.getGame(id)
       .subscribe(game => this.setGameDetails(game));
   }

@@ -12,19 +12,19 @@ export class GameModel {
   giantbomb_id: number;
   name: string;
   popularity: number;
-  box: Images;
-  logo: Images;
+  box: ImagesModel;
+  logo: ImagesModel;
 }
 
 export class TopGamesModel {
   channels: number;
   viewers: number;
-  game: Game;
+  game: GameModel;
 
 }
 
 export class GameDataModel {
   _total: number;
   _links: object;
-  top: Array<TopGames>;
+  top: Array<TopGamesModel>;
 }

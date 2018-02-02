@@ -1,10 +1,14 @@
 <div class="row games-filter default-gutter">
   <input class="form-control" type="text" [placeholder]="filterPlaceholder" [(ngModel)]="filterText" />
 </div>
-<div class="row games-list default-gutter">
+<div class="row games-list default-gutter bg-light"
+  infiniteScroll
+  [infiniteScrollDistance]="0"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()">
   <div class="col-sm-3 games-item" *ngFor="let item of games | nameFilter: filterText">
-  	<a routerLink="/game/{{item.game._id}}">
-	    <img [src]="item.game.box.medium" alt="{{item.game.name}}"><br>
+  	<a routerLink="/game/{{item?.game._id}}">
+	    <img [src]="item?.game.box.medium" alt="{{item.game.name}}"><br>
 	    <span>{{item.game.name}}</span>
 	</a>
   </div>

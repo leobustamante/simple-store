@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http, BaseRequestOptions } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { GamesModule } from './games/games.module';
 
@@ -25,6 +26,7 @@ import { NameFilterPipe } from './pipes/name-filter.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    InfiniteScrollModule,
     AppRoutingModule,
     GamesModule,
     NgbModule.forRoot()

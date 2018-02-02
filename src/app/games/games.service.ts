@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 export class GamesService {
   private apiUrl = 'https://api.twitch.tv/kraken/games/top';  // URL to web api
 
-  private params = {limit: 10, offset: 0};
+  params: any;
 
   private headers = new Headers({
     'Content-Type': 'application/json',
@@ -18,7 +18,9 @@ export class GamesService {
 
   constructor(private http: Http) { }
 
-  getGames(): Observable<any> {
+  getGames(params: any): Observable<any> {
+    this.params = params || {};
+    console.log(this.params)
     return this.http.get( this.apiUrl, { headers: this.headers, params: this.params })
       .map(this.extractJson)
       .catch((error: Response | any) => this.handleError(error));
