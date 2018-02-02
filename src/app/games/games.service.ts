@@ -4,9 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import { ActivatedRoute } from '@angular/router';
+
 @Injectable()
 export class GamesService {
-  private apiUrl = 'https://api.twitch.tv/kraken/games/top';  // URL to web api
+  private apiTopUrl = 'https://api.twitch.tv/kraken/games/top';  // URL to web api
+  private apiGameUrl = 'https://api.twitch.tv/kraken/search/games';  // URL to web api
 
   params: any;
 
@@ -16,20 +19,26 @@ export class GamesService {
     'Client-ID': 'ipmqjlawigtbo0b9h2ilqw33sx8h5w'
   });
 
-  constructor(private http: Http) { }
+  constructor(private http: Http,
+              private route: ActivatedRoute) { }
 
   getGames(params: any): Observable<any> {
     this.params = params || {};
-    console.log(this.params)
-    return this.http.get( this.apiUrl, { headers: this.headers, params: this.params })
+    return this.http.get( this.apiTopUrl, { headers: this.headers , params: this.params})
       .map(this.extractJson)
       .catch((error: Response | any) => this.handleError(error));
   }
 
-  getGame(id: number | string): Observable<any> {
-    return this.getGames()
-      // (+) before `id` turns the string into a number
-      .map(games => games.top.find(item => item.game._id === +id));
+  getGame(name: string): Observable<any> {
+
+    let gameParam = {
+      query: name,
+      type: 'suggest'
+    }
+
+    return this.http.get( this.apiGameUrl, { headers: this.headers, params: gameParam})
+      .map(this.extractJson)
+      .catch((error: Response | any) => this.handleError(error));      
   }
 
   private extractJson(res: Response) {

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import 'rxjs/add/operator/filter';
 
-import { GameModel } from '../../providers/game.model';
+import { GameModel, GameDataModel } from '../../providers/game.model';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -12,31 +13,51 @@ import { GamesService } from '../games.service';
 })
 export class GameDetailComponent implements OnInit {
   game: Array<any>;
+  name: string;
+
+  @Input() games: GameDataModel;
+
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute,  
     private gamesService: GamesService,
     private location: Location
-  ) {}
+  ) {
+    console.log(route.snapshot.data)
+  }
 
   ngOnInit(): void {
-    this.getGame();
+    console.log(this.games)
+
+    this.route.queryParams
+      .filter(params => params.name)
+      .subscribe(params => {
+        console.log(params); // {order: "popular"}
+
+        this.name = params.name;
+        this.getGame();
+      });
+   
   }
 
   getGame(): void {
-    const id = + this.route.snapshot.paramMap.get('id');
-    this.gamesService.getGame(id)
-      .subscribe(game => this.setGameDetails(game));
+    this.gamesService.getGame(this.name)
+      .subscribe(result => this.setGameDetails(result));
   }
 
-  setGameDetails(game) {
-    this.game = game;
+  setGameDetails(result) {
+    this.game = result.games[0];
     //this.gameDeta
 
-    console.log(game)
+    console.log(this.game)
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  goToGameDetails(event, item): void {
+    event.preventDefault();
+
   }
 
 

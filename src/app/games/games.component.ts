@@ -21,7 +21,7 @@ export class GamesComponent implements OnInit {
   filterText: string;
   filterPlaceholder: string;
   filterInput: string;
-  games: Array<GameDataModel> = [];
+  public games: Array<GameDataModel> = [];
   baseLimit = 20;
   baseOffset = 0;
   params = { limit: this.baseLimit, offset: this.baseOffset };
@@ -37,13 +37,13 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(): void {
-    console.log(this.params)
+    //console.log(this.params)
     this.gamesService.getGames(this.params)
         .subscribe(games => this.setGamesList(games));
   }
 
   setGamesList(games) {
-    this.params.offset = this.params.offset + 1;
+    this.params.offset = this.params.offset + this.baseLimit;
     let top = games.top;
 
     if(!this.games.length) {
