@@ -1,0 +1,17 @@
+.default-gutter {
+  padding: 20px;
+}
+
+.hidden {
+  //display: none;
+}
+
+.type-11 {
+  font-size: 11px;
+}
+
+.eff {
+  &-hover-show:hover {
+    display: inherit;
+  }
+}
