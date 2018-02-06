@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/filter';
+
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 import { GameModel, GameDataModel } from '../../providers/game.model';
 import { GamesService } from '../games.service';
@@ -14,29 +16,30 @@ import { GamesService } from '../games.service';
 export class GameDetailComponent implements OnInit {
   game: Array<any>;
   name: string;
-
-  @Input() games: GameDataModel;
+  buffering: boolean;
 
   constructor(
-    private route: ActivatedRoute,  
+    private router: Router,
+    private route: ActivatedRoute,
     private gamesService: GamesService,
     private location: Location
   ) {
-    console.log(route.snapshot.data)
+    this.buffering = true;
   }
 
   ngOnInit(): void {
-    console.log(this.games)
+
+    this.router.routerState.parent(this.route).params.subscribe(params => {
+        //this.parentRouteId = +params["id"];
+        console.log(params)
+      });
 
     this.route.queryParams
       .filter(params => params.name)
       .subscribe(params => {
-        console.log(params); // {order: "popular"}
-
         this.name = params.name;
         this.getGame();
       });
-   
   }
 
   getGame(): void {
@@ -46,9 +49,7 @@ export class GameDetailComponent implements OnInit {
 
   setGameDetails(result) {
     this.game = result.games[0];
-    //this.gameDeta
-
-    console.log(this.game)
+    this.buffering = false;
   }
 
   goBack(): void {
@@ -59,6 +60,4 @@ export class GameDetailComponent implements OnInit {
     event.preventDefault();
 
   }
-
-
 }

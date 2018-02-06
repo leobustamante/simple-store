@@ -1,6 +1,20 @@
 <div class="row default-gutter bg-light">
-  <p>
-    game-detail works!hh
-    {{game?.name}} OK!
-  </p>
+  <div class="col-4">
+    <img [src]="game?.box.large" alt="{{game?.name}}" class="img-thumbnail rounded float-left">
+  </div>
+  <div class="col-8">
+    <span class="eff-hover-show item-title">{{game?.name}}</span>
+    <dl>
+      <dt class="hidden">Name: </dt>
+      <dd>{{game?.name}}</dd>
+      <dt>Age: </dt>
+      <dd>23</dd>
+
+      <dt>Gender: </dt>
+      <dd>Male</dd>
+
+      <dt>Day of Birth:</dt>
+      <dd>12th May 1986</dd>
+    </dl>
+  </div>
 </div>

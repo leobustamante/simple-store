@@ -13,12 +13,16 @@ import { GamesModule } from './games/games.module';
 import { AppComponent } from './app.component';
 import { GamesComponent } from './games/games.component';
 import { NameFilterPipe } from './pipes/name-filter.pipe';
+import { LoaderComponent } from './shared/loader/loader.component';
+import { SortByPipe } from './pipes/sort-by.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     GamesComponent,
-    NameFilterPipe
+    LoaderComponent,
+    NameFilterPipe,
+    SortByPipe
   ],
   imports: [
     BrowserModule,

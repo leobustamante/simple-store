@@ -1,7 +1,6 @@
 .games {
   &-item {
     text-align: center;
-    border-radius: 12px;
     padding: 10px;
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
@@ -9,10 +8,13 @@
     -o-transition: all 0.5s ease;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      
       .item-title {
         opacity: 1;
+        bottom: 0;
+      }
+
+      .item-link {
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
 
@@ -21,6 +23,8 @@
       color: #fff;
       text-decoration: none;
       display: inline-block;
+      padding: 10px;
+      overflow: hidden;
     }
 
     .item-title {
@@ -32,10 +36,10 @@
       max-width: 100%;
       width: 100%;
       position: absolute;
-      bottom: 0;
+      bottom: -100%;
       left: 0;
       font-size: 12px;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.8);
       padding: 5px;
     }
   }
