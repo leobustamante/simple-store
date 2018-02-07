@@ -1,0 +1,24 @@
+.default-gutter {
+  padding: 10px;
+}
+
+.hidden {
+  //display: none;
+}
+
+.type-11 {
+  font-size: 11px;
+}
+
+.eff {
+  &-hover-show:hover {
+    display: inherit;
+  }
+}
+
+
+@include media-breakpoint-up(lg) {
+  .default-gutter {
+    padding: 15px;
+  }
+}
