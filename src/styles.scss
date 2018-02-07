@@ -1,4 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/scss/bootstrap';
 @import 'assets/styles/base';
 @import 'assets/styles/helpers';
-@import 'assets/styles/loader';
+
+////COMPONENTS
+@import 'assets/styles/components/loader';
+@import 'assets/styles/components/games';
+

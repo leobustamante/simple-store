@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { LoaderComponent } from '../shared/loader/loader.component';
 
-import { GameDataModel, TopGamesModel } from '../providers/game.model';
+import { GameItemModel } from '../providers/game.model';
 import { GamesService } from './games.service';
 
 import { NameFilterPipe } from '../pipes/name-filter.pipe';
@@ -20,56 +20,68 @@ import { SortByPipe } from '../pipes/sort-by.pipe';
 })
 export class GamesComponent implements OnInit {
   public radioGroupForm: FormGroup;
+  games: Array<GameItemModel> = [];
   buffering: boolean;
-  enableFilter: boolean;
   filterText: string;
   filterPlaceholder: string;
   filterInput: string;
-  public games: Array<GameDataModel> = [];
   baseLimit = 20;
   baseOffset = 0;
-  params = { limit: this.baseLimit, offset: this.baseOffset };
   order = -1;//asc
+  myStorage = window.localStorage;
 
   constructor(
     private gamesService: GamesService,
     private formBuilder: FormBuilder
   ) {
     this.buffering = true;
-    this.enableFilter = true;
-    this.filterPlaceholder = "Buscar";
+    this.filterPlaceholder = 'Buscar';
+    this.setFetchLimit(window.screen.width);
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setFetchLimit(event.target.innerWidth);
   }
 
   ngOnInit() {
-    this.getGames();
     this.filterText = '';
     this.radioGroupForm = this.formBuilder.group({
-      'filterModel': 'game.popularity'
+      'filterModel': 'popularity'
     });
+    this.getGames();
   }
 
   getGames(): void {
-    this.gamesService.getGames(this.params)
+    this.gamesService.getGames(this.getParams())
         .subscribe(games => this.setGamesList(games));
   }
 
   setGamesList(games) {
-    this.params.offset = this.params.offset + this.baseLimit;
-    let top = games.top;
-
+    this.baseOffset += this.baseLimit;
     if(!this.games.length) {
-      this.games = top;
+      this.games = games;
     } else {
-      top.map(item => this.games.push(item));
+      games.map(item => this.games.push(item));
+
     }
-    console.log(this.games)
+    window.localStorage.setItem('games', JSON.stringify(this.games));
     this.buffering = false;
+  }
+
+  getParams(): void {
+    return { limit: this.baseLimit, offset: this.baseOffset };
   }
 
   onScroll() {
     this.buffering = true;
     this.getGames();
+  }
+
+  setFetchLimit(SW: number) {
+    let mob = 425, tab = 768;
+    this.baseLimit = SW <= mob ? 25 : SW <= tab ? 50 : 100;
   }
 
 }

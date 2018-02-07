@@ -1,0 +1,90 @@
+.games {
+  &-item {
+    text-align: center;
+    padding: 10px;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+
+    &:hover {
+      .item-title {
+        opacity: 1;
+        bottom: 0;
+      }
+
+      .item-link {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .item-link {
+      position: relative;
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 0;
+      overflow: hidden;
+      max-width: 120px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .item-title {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      opacity: 0;
+      max-width: 100%;
+      width: 100%;
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      font-size: 12px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 5px;
+    }
+  }
+}
+
+.box {
+  //background: red;
+  padding: 10px;
+
+  &:hover {
+    .item-title {
+      opacity: 1;
+    }
+  }
+}
+@include media-breakpoint-down(xs) {
+  .image-container {
+    padding: 0;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .game-details {
+    padding-top: 10px;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+  }
+}
+
+@include media-breakpoint-up(xs) {
+  .games {
+    &-item {
+      .item-link {
+        max-width:100%;
+      }
+    }
+  }
+}

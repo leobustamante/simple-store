@@ -5,22 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SortByPipe implements PipeTransform {
 
-  transform(array, path: string[], order: number) {
+  transform(array, path: string, order: number) {
     // Check if is not null
     if (!array || !path) return array;
 
-    path = path.split('.');
-
-    //order = -1;
-
     return array.sort((a, b) => {
-      // We go for each property followed by path
-      path.forEach(property => {
-        a = a[property];
-        b = b[property];
-      })
-
-      // Order * (-1): We change our order
+      a = a[path];
+      b = b[path];
       return a > b ? order : order * (- 1);
     })
   }

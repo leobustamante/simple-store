@@ -5,7 +5,7 @@ import 'rxjs/add/operator/filter';
 
 import { LoaderComponent } from '../../shared/loader/loader.component';
 
-import { GameModel, GameDataModel } from '../../providers/game.model';
+import { GameItemModel } from '../../providers/game.model';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { GamesService } from '../games.service';
   styleUrls: ['./game-detail.component.scss']
 })
 export class GameDetailComponent implements OnInit {
-  game: Array<any>;
-  name: string;
+  gameId: string;
+  game: GameItemModel;
   buffering: boolean;
 
   constructor(
@@ -28,36 +28,26 @@ export class GameDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.router.routerState.parent(this.route).params.subscribe(params => {
-        //this.parentRouteId = +params["id"];
-        console.log(params)
-      });
-
-    this.route.queryParams
-      .filter(params => params.name)
-      .subscribe(params => {
-        this.name = params.name;
-        this.getGame();
+    this.route.params
+      .subscribe( params => {
+        this.gameId = params.id;
+        this.getGame(this.gameId);
       });
   }
 
-  getGame(): void {
-    this.gamesService.getGame(this.name)
+  getGame(gameId): void {
+    this.gamesService.getGame(gameId)
       .subscribe(result => this.setGameDetails(result));
   }
 
   setGameDetails(result) {
-    this.game = result.games[0];
+    this.game = result;
     this.buffering = false;
   }
 
   goBack(): void {
-    this.location.back();
-  }
-
-  goToGameDetails(event, item): void {
-    event.preventDefault();
+    //this.location.back();
+    this.router.navigate(['/games']);
 
   }
 }

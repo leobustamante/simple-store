@@ -1,20 +1,20 @@
-<div class="row default-gutter bg-light">
-  <div class="col-4">
-    <img [src]="game?.box.large" alt="{{game?.name}}" class="img-thumbnail rounded float-left">
+<div class="row default-gutter">
+  <button type="button" class="btn btn-primary btn-sm" (click)="goBack()">Voltar</button>
+</div>
+<div class="row default-gutter bg-light position-relative">
+  <div class="col-12 col-sm-4 image-container">
+    <img [src]="game?.images.large" alt="{{game?.name}}" class="img-thumbnail rounded float-left d-none d-sm-inline-block"/>
+    <img [src]="game?.images.large" alt="{{game?.name}}" class="img-thumbnail rounded float-left d-inline-block d-sm-none"/>
   </div>
-  <div class="col-8">
-    <span class="eff-hover-show item-title">{{game?.name}}</span>
-    <dl>
-      <dt class="hidden">Name: </dt>
-      <dd>{{game?.name}}</dd>
-      <dt>Age: </dt>
-      <dd>23</dd>
-
-      <dt>Gender: </dt>
-      <dd>Male</dd>
-
-      <dt>Day of Birth:</dt>
-      <dd>12th May 1986</dd>
+  <div class="col-12 col-sm-8 d-block text-center text-sm-left game-details">
+    <h2 class="h2">{{game?.name}}</h2>
+    <dl class="pt-xs-4 pt-2">
+      <dt class="d-none">Visualizações: </dt>
+      <dd><span class="font-weight-bold">{{game?.viewers}}</span> visualizações</dd>
+      <dt class="d-none">Canais: </dt>
+      <dd><span class="font-weight-bold">{{game?.channels}}</span> canais ao vivo</dd>
+      <dt class="d-none">Popularidade: </dt>
+      <dd><span class="font-weight-bold">{{game?.popularity}}</span> popularidade</dd>
     </dl>
   </div>
 </div>

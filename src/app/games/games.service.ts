@@ -3,8 +3,10 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { of } from 'rxjs/observable/of';
 
-import { ActivatedRoute } from '@angular/router';
+
+import { GameItemModel } from '../providers/game.model';
 
 @Injectable()
 export class GamesService {
@@ -19,35 +21,37 @@ export class GamesService {
     'Client-ID': 'ipmqjlawigtbo0b9h2ilqw33sx8h5w'
   });
 
-  constructor(private http: Http,
-              private route: ActivatedRoute) { }
+  constructor(private http: Http) { }
 
   getGames(params: any): Observable<any> {
     this.params = params || {};
-    return this.http.get( this.apiTopUrl, { headers: this.headers , params: this.params})
-      .map(this.extractJson)
+    return this.http.get(this.apiTopUrl, { headers: this.headers , params: this.params})
+      .map(res => {
+        return res.json().top.map(item => {
+          return new GameItemModel(
+            item.game._id,
+            item.game.name,
+            item.viewers,
+            item.channels,
+            item.game.popularity,
+            item.game.box
+          );
+        });
+      })
       .catch((error: Response | any) => this.handleError(error));
   }
 
-  getGame(name: string): Observable<any> {
-
-    let gameParam = {
-      query: name,
-      type: 'suggest'
-    }
-
-    return this.http.get( this.apiGameUrl, { headers: this.headers, params: gameParam})
-      .map(this.extractJson)
-      .catch((error: Response | any) => this.handleError(error));      
+  getGame(id: number | string): Observable<GameItemModel[]> {
+    return of(JSON.parse(window.localStorage.getItem('games'))
+      .find(x => x.id == +id));
   }
 
   private extractJson(res: Response) {
-    console.log(res.json())
     return res.json();
   }
 
   private handleError(error: Response | any) {
-    return this.throwError(this.showError(this.extractError(error)));
+    return this.throwError(this.extractError(error));
   }
 
   private extractError(error: Response | any) {
@@ -57,16 +61,6 @@ export class GamesService {
       return `${error.status} - ${error.statusText || ''} ${err}`;
     }
     return error.message ? error.message : error.toString();
-  }
-
-  private showError(error: string) {
-    /*this.translate.get('bundle.action.close').subscribe((bundle: string) => {
-      this.snackBar.open(error, bundle, {
-        duration: 20000,
-        extraClasses: ['snack-error']
-      });
-    });*/
-    return error;
   }
 
   private throwError(error: string) {

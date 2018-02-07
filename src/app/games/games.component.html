@@ -1,20 +1,20 @@
-<div class="row games-filter default-gutter">
+<div class="row games-filter default-gutter" (window:resize)="onResize($event)">
   <div class="form-group container-fluid">
     <input class="form-control" type="text" [placeholder]="filterPlaceholder" [(ngModel)]="filterText" />
   </div>
 </div>
 <div class="row games-list default-gutter bg-light"
   infiniteScroll
-  [infiniteScrollDistance]="0"
-  [infiniteScrollThrottle]="50"
+  [infiniteScrollDistance]="0.1"
+  [infiniteScrollThrottle]="500"
   (scrolled)="onScroll()">
   <div class="container-fluid">
-    <div class="row justify-content-md-center">
-      <div class="col-md-auto">
+    <div class="row justify-content-center">
+      <div class="col-auto">
         <form [formGroup]="radioGroupForm">
           <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="filterModel">
             <label ngbButtonLabel class="btn-primary">
-              <input ngbButton type="radio" [value]="'game.popularity'"> Popularidade
+              <input ngbButton type="radio" [value]="'popularity'"> Popularidade
             </label>
             <label ngbButtonLabel class="btn-primary">
               <input ngbButton type="radio" value="viewers"> Visualizções
@@ -24,10 +24,10 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3 games-item box" *ngFor="let item of games | nameFilter: filterText | sortBy:radioGroupForm.value['filterModel']:order">
-  	<a routerLink="/games/{{item?.game._id}}" [queryParams]="{name: item.game.name}" class="item-link rounded-top">
-	    <img [src]="item?.game.box.medium" alt="{{item.game.name}}"><br>
-	    <span class="eff-hover-show item-title">{{item.game.name}}</span>
+  <div class="col-4 col-sm-4 col-md-3 games-item box" *ngFor="let game of games | nameFilter: filterText | sortBy:radioGroupForm.value['filterModel']:order">
+    <a routerLink="/game/{{game?.id}}" class="item-link rounded-top">
+      <img [src]="game?.images?.medium" alt="{{game?.name}}"><br>
+      <span class="eff-hover-show item-title">{{game?.name}}</span>
     </a>
   </div>
   <app-loader [buffering]="buffering" class="container-fluid"></app-loader>
