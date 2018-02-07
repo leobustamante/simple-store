@@ -46,7 +46,6 @@ export class GameDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    //this.location.back();
     this.router.navigate(['/games']);
 
   }

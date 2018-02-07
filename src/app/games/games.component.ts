@@ -14,7 +14,6 @@ import { SortByPipe } from '../pipes/sort-by.pipe';
 
 @Component({
   selector: 'app-games',
-  //directives: [ InfiniteScroll ],
   templateUrl: './games.component.html',
   styleUrls: ['./games.component.scss'],
 })
@@ -27,7 +26,7 @@ export class GamesComponent implements OnInit {
   filterInput: string;
   baseLimit = 20;
   baseOffset = 0;
-  order = -1;//asc
+  order = -1; // asc
   myStorage = window.localStorage;
 
   constructor(
@@ -60,7 +59,7 @@ export class GamesComponent implements OnInit {
 
   setGamesList(games) {
     this.baseOffset += this.baseLimit;
-    if(!this.games.length) {
+    if (!this.games.length) {
       this.games = games;
     } else {
       games.map(item => this.games.push(item));
@@ -80,8 +79,7 @@ export class GamesComponent implements OnInit {
   }
 
   setFetchLimit(SW: number) {
-    let mob = 425, tab = 768;
+    const mob = 425, tab = 768;
     this.baseLimit = SW <= mob ? 25 : SW <= tab ? 50 : 100;
   }
-
 }
