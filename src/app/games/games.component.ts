@@ -70,7 +70,7 @@ export class GamesComponent implements OnInit {
     this.buffering = false;
   }
 
-  getParams(): void {
+  getParams(): any {
     return { limit: this.baseLimit, offset: this.baseOffset };
   }
 
